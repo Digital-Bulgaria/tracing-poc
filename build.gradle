@@ -1,0 +1,48 @@
+buildscript {
+  ext {
+    springBootVersion = '1.5.9.RELEASE'
+  }
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+  dependencies {
+    classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+  }
+}
+
+allprojects {
+  group = 'com.example.demo.slueth'
+  version = '0.0.1-SNAPSHOT'
+}
+
+subprojects {
+
+  apply plugin: 'io.spring.dependency-management'
+  apply plugin: 'java'
+  apply plugin: 'org.springframework.boot'
+
+
+  dependencyManagement {
+    imports {
+      mavenBom 'org.springframework.cloud:spring-cloud-sleuth:2.0.0.M5'
+    }
+  }
+
+
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+      url 'https://repo.spring.io/libs-milestone'
+    }
+  }
+
+  dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+  }
+}

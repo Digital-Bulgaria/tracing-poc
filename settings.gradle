@@ -1,0 +1,5 @@
+rootProject.name = 'tracing-poc'
+
+include 'jms-kafka'
+include 'kafka-rest'
+include 'rest'
