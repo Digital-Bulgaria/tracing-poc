@@ -1,0 +1,9 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: service4
+
+logging.level.org.springframework.cloud.sleuth: DEBUG
+logging.level.org.springframework.web.servlet.DispatcherServlet: DEBUG
