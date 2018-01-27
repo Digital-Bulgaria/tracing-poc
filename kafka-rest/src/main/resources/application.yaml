@@ -1,2 +1,8 @@
 server:
   port: 8082
+
+spring:
+  application:
+    name: service2
+
+logging.level.org.springframework.cloud.sleuth: DEBUG

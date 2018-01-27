@@ -1,0 +1,21 @@
+version: '3.3'
+services:
+  kafka:
+    image: spotify/kafka
+    ports:
+      - 9092:9092
+      - 2181:2181
+    environment:
+      ADVERTISED_HOST: localhost
+  activemq-broker:
+    image: webcenter/activemq:5.14.3
+    restart: always
+    ports:
+      - "61616:61616"
+      - "8161:8161"
+    environment:
+      - ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT=true
+      - ACTIVEMQ_ADMIN_LOGIN=shangri
+      - ACTIVEMQ_ADMIN_PASSWORD=llama
+      - ACTIVEMQ_MIN_MEMORY=256
+      - ACTIVEMQ_MAX_MEMORY=512
