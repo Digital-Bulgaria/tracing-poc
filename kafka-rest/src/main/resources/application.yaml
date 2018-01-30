@@ -4,7 +4,6 @@ server:
 spring:
   application:
     name: s2
-    name: service2
   kafka:
     listener:
       ack-mode: manual
