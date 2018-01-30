@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -53,5 +55,11 @@ public class Service4Controller {
     }
 
     return expenses;
+  }
+
+  @PostMapping("/greeting")
+  public void receiveGreeting() {
+
+
   }
 }
