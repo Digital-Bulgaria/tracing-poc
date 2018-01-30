@@ -14,9 +14,6 @@ services:
       - "61616:61616"
       - "8161:8161"
     environment:
-      - ACTIVEMQ_REMOVE_DEFAULT_ACCOUNT=true
-      - ACTIVEMQ_ADMIN_LOGIN=shangri
-      - ACTIVEMQ_ADMIN_PASSWORD=llama
       - ACTIVEMQ_MIN_MEMORY=256
       - ACTIVEMQ_MAX_MEMORY=512
   storage:
