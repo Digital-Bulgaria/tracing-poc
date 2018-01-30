@@ -1,6 +1,6 @@
 package com.example.demo.jmskafka.kafka.sender;
 
-import com.example.testsleuth.kafka.KafkaMessage;
+import com.example.demo.jmskafka.kafka.KafkaMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import org.apache.kafka.common.serialization.StringSerializer;
