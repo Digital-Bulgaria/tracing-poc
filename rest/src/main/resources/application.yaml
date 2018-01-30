@@ -4,6 +4,10 @@ server:
 spring:
   application:
     name: service4
+  zipkin:
+    base-url: http://127.0.0.1:9411/
+  sleuth:
+    sampler:
+      percentage: 1.0
 
 logging.level.org.springframework.cloud.sleuth: DEBUG
-logging.level.org.springframework.web.servlet.DispatcherServlet: DEBUG
