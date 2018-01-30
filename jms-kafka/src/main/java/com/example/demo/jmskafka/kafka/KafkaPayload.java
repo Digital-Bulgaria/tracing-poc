@@ -1,14 +1,17 @@
-package com.example.demo.jmskafka.kafka.Message;
+package com.example.demo.jmskafka.kafka;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-
+/**
+ * NOTE: THIS IS TAKEN FROM REWE REFERENCE IMPLEMENTATION PLEASE SYNC YOUR CHANGES!
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class KafkaPayload<T> {
@@ -36,22 +39,29 @@ public class KafkaPayload<T> {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof KafkaPayload)) {
+  public boolean equals(Object obj) {
+    if (obj == null) {
       return false;
     }
-    KafkaPayload<?> that = (KafkaPayload<?>) o;
-    return Objects.equals(getVersion(), that.getVersion()) &&
-        Objects.equals(getMessage(), that.getMessage());
+    if (obj == this) {
+      return true;
+    }
+    if (obj.getClass() != getClass()) {
+      return false;
+    }
+    KafkaPayload rhs = (KafkaPayload) obj;
+    return new EqualsBuilder()
+        .append(this.version, rhs.version)
+        .append(this.message, rhs.message)
+        .isEquals();
   }
 
   @Override
   public int hashCode() {
-
-    return Objects.hash(getVersion(), getMessage());
+    return new HashCodeBuilder()
+        .append(version)
+        .append(message)
+        .toHashCode();
   }
 
   @Override

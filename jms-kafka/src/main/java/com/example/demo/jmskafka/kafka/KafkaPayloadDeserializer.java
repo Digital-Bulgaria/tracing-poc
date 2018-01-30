@@ -1,4 +1,4 @@
-package com.example.demo.jmskafka.kafka.Message;
+package com.example.demo.jmskafka.kafka;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -13,6 +13,9 @@ import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 
+/**
+ * NOTE: THIS IS TAKEN FROM REWE REFERENCE IMPLEMENTATION PLEASE SYNC YOUR CHANGES!
+ */
 public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> implements
     ContextualDeserializer {
 

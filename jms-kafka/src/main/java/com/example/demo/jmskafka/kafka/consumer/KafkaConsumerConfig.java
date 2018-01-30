@@ -1,4 +1,4 @@
-package com.example.demo.jmskafka.kafka.config;
+package com.example.demo.jmskafka.kafka.consumer;
 
 import java.util.Collections;
 import org.springframework.boot.autoconfigure.kafka.ConcurrentKafkaListenerContainerFactoryConfigurer;
@@ -21,13 +21,14 @@ import org.springframework.retry.support.RetryTemplate;
 @EnableConfigurationProperties(KafkaProperties.class)
 public class KafkaConsumerConfig {
 
-  public static final String TRACING_POC_GREETINGS = "tracing_poc_greetings";
-  public static final String POC_KAFKA_FACTORY = "pocKafkaFactory";
+  public static final String MD_KAFKA_FACTORY = "mdKafkaFactory";
 
+  //As required by REWE architects - this will trigger infinite loop
+  //in some cases.
   private static final int NUMBER_OF_TRIES = Integer.MAX_VALUE;
 
 
-  @Bean(POC_KAFKA_FACTORY)
+  @Bean(MD_KAFKA_FACTORY)
   public ConcurrentKafkaListenerContainerFactory<Object, Object> createKafkaListenerContainerFactory
       (ConcurrentKafkaListenerContainerFactoryConfigurer configurer,
           ConsumerFactory<Object, Object> consumerFactory) {
