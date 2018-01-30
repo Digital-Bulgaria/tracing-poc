@@ -16,7 +16,7 @@ import org.springframework.util.concurrent.SuccessCallback;
 public class BirthdayService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BirthdayService.class);
-  private final static String TOPIC = "birthday";
+  private final static String TOPIC = "tracing_poc_greetings";
   private final static String TYPE = "type";
   private KafkaSender kafkaSender;
 

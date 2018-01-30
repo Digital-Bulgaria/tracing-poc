@@ -10,9 +10,6 @@ import net.logstash.logback.encoder.org.apache.commons.lang.builder.EqualsBuilde
 import net.logstash.logback.encoder.org.apache.commons.lang.builder.HashCodeBuilder;
 import org.springframework.cloud.sleuth.Span;
 
-/**
- * NOTE: THIS IS TAKEN FROM REWE REFERENCE IMPLEMENTATION PLEASE SYNC YOUR CHANGES!
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class KafkaPayload<T> {

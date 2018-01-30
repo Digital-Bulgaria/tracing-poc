@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import org.springframework.cloud.sleuth.Span;
+import org.springframework.util.StringUtils;
 
 public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> implements
     ContextualDeserializer {
@@ -56,6 +57,13 @@ public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> 
     }
     Object message;
     Integer version;
+    Span span;
+
+    if(StringUtils.hasText(spanString)) {
+      span = objectMapper.readValue(spanString, Span.class);
+    } else {
+      span = Span.builder().build();
+    }
 
 
     if (dataNode != null) {
@@ -73,7 +81,7 @@ public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> 
       version = jsonNode.get(FIELD_VERSION).intValue();
     }
 
-    return new KafkaPayload<>(version, message,objectMapper.readValue(spanString, Span.class));
+    return new KafkaPayload<>(version, message, span);
   }
 
 }
