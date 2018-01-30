@@ -4,5 +4,19 @@ server:
 spring:
   application:
     name: s2
+    name: service2
+  kafka:
+    listener:
+      ack-mode: manual
+    bootstrapServers: localhost:9092
+    properties:
+      security.protocol: PLAINTEXT
+      sasl.mechanism: PLAIN
+    consumer:
+      group-id: tracing_poc_greetings
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      enable-auto-commit: false
+      auto-offset-reset: "earliest"
 
 logging.level.org.springframework.cloud.sleuth: DEBUG

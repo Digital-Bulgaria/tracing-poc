@@ -1,0 +1,12 @@
+{
+  "id": "377e36ff-7e03-4dea-a6e6-7b545c04ed9e",
+  "key": "e",
+  "time": "2017-12-21T13:37:06Z",
+  "type": "poc_greeting",
+  "payload": {
+    "version": 1,
+    "to" : "x",
+    "date" : "2018/01/30",
+    "message" : "fuck me"
+  }
+}

@@ -1,0 +1,6 @@
+dependencies {
+    // This will add support for java 8 dates in jackson
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+
+    compile('org.springframework.kafka:spring-kafka')
+}
