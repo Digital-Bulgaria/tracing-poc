@@ -1,9 +1,9 @@
 server:
-  port: 8084
+  port: 8080
 
 spring:
   application:
-    name: service4
+    name: s3
   zipkin:
     base-url: http://127.0.0.1:9411/
   sleuth:
