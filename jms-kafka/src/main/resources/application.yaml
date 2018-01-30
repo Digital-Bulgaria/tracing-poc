@@ -4,11 +4,15 @@ server:
 spring:
   application:
     name: s1
+  sleuth:
+    sampler.percentage: 1.0
+    enabled: true
+  zipkin:
+    baseUrl: http://localhost:9411
+    sender:
+      type: web
 
 logging.level.org.springframework.cloud.sleuth: DEBUG
 
 logging.level.org.springframework.web.servlet.DispatcherServlet: DEBUG
-spring.sleuth.enabled: true
 
-
-sleuth.sampler.percentage: 1.0

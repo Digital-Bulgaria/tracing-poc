@@ -3,6 +3,7 @@ package com.example.demo.jmskafka;
 import com.example.demo.jmskafka.domain.Greeting;
 import java.time.LocalDate;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,14 @@ public class RunnerKafkaSend implements CommandLineRunner {
   @Override
   public void run(String... strings) throws Exception {
 
-    tracer.createSpan("birhtday");
+    Span span = tracer.createSpan("birhtday");
 
     Greeting greeting = new Greeting();
     greeting.setDate(LocalDate.now());
     greeting.setMessage("Happy birthday!");
 
     this.birthdayService.sendGreeting(greeting);
+
+    tracer.close(span);
   }
 }
