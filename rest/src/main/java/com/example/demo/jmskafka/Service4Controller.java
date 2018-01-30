@@ -59,7 +59,7 @@ public class Service4Controller {
   }
 
   @PostMapping("/greeting")
-  public ResponseEntity receiveGreeting(@RequestBody GreetingPayload greeting) {
+  public ResponseEntity<GreetingPayload> receiveGreeting(@RequestBody GreetingPayload greeting) {
 
     LOGGER.info("Received greeting [{}]", greeting);
 
@@ -74,6 +74,6 @@ public class Service4Controller {
 
     this.tracer.getCurrentSpan().logEvent("greetingReceived");
 
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok(greeting);
   }
 }
