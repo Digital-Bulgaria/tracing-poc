@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
+import org.springframework.cloud.sleuth.Span;
 
 public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> implements
     ContextualDeserializer {
@@ -19,6 +20,7 @@ public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> 
   public static final String FIELD_REVISION = "revision";
   public static final String FIELD_VERSION = "version";
   public static final String FIELD_DATA = "data";
+  public static final String FIELD_SPAN = "span";
 
   private JavaType valueType;
 
@@ -46,9 +48,15 @@ public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> 
       DeserializationContext deserializationContext) throws IOException {
     final JsonNode jsonNode = jsonParser.readValueAsTree();
     final JsonNode dataNode = jsonNode.get(FIELD_DATA);
+    final JsonNode spanNode = jsonNode.get(FIELD_SPAN);
 
+    String spanString = "";
+    if (spanNode != null) {
+      spanString = spanNode.asText();
+    }
     Object message;
     Integer version;
+
 
     if (dataNode != null) {
       message = objectMapper
@@ -65,7 +73,7 @@ public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> 
       version = jsonNode.get(FIELD_VERSION).intValue();
     }
 
-    return new KafkaPayload<>(version, message);
+    return new KafkaPayload<>(version, message,objectMapper.readValue(spanString, Span.class));
   }
 
 }

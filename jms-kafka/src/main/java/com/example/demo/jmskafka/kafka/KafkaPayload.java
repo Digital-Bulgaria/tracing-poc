@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.cloud.sleuth.Span;
 
 /**
  * NOTE: THIS IS TAKEN FROM REWE REFERENCE IMPLEMENTATION PLEASE SYNC YOUR CHANGES!
@@ -17,6 +18,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class KafkaPayload<T> {
 
   private final Integer version;
+  private Span span;
 
   @NotNull
   @Valid
@@ -24,10 +26,10 @@ public class KafkaPayload<T> {
   private final T message;
 
   public KafkaPayload(@JsonProperty("version") final Integer version,
-      @JsonProperty("message") final T message) {
+      @JsonProperty("message") final T message, @JsonProperty("span") Span span ) {
     this.version = version;
     this.message = message;
-
+    this.span = span;
   }
 
   public Integer getVersion() {
@@ -36,6 +38,10 @@ public class KafkaPayload<T> {
 
   public T getMessage() {
     return message;
+  }
+
+  public Span getSpan() {
+    return span;
   }
 
   @Override

@@ -36,17 +36,15 @@ public class KafkaMessage<T> {
   @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssX")//boh, article-v3 uses this format.
   private ZonedDateTime time;
 
-  private Span span;
-
   public KafkaMessage(@JsonProperty("id") final UUID id, @JsonProperty("key") final String key,
       @JsonProperty("time") final ZonedDateTime time, @JsonProperty("type") final String type,
-      @JsonProperty("payload") final KafkaPayload<T> payload, Span span) {
+      @JsonProperty("payload") final KafkaPayload<T> payload) {
     this.id = id;
     this.key = key;
     this.time = time;
     this.type = type;
     this.payload = payload;
-    this.span = span;
+
   }
 
   public UUID getId() {
@@ -105,9 +103,5 @@ public class KafkaMessage<T> {
         ", type='" + type + '\'' +
         ", payload=" + payload +
         '}';
-  }
-
-  public Span getSpan() {
-    return span;
   }
 }

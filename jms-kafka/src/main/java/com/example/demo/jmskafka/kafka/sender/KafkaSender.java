@@ -57,9 +57,9 @@ public class KafkaSender {
 
     LOGGER.info("Publishing message {}, {}, {}, {}.", topic, type, payload, tracer.getCurrentSpan());
 
-    final KafkaPayload<T> kafkaPayload = new KafkaPayload<>(payloadVersion, payload);
+    final KafkaPayload<T> kafkaPayload = new KafkaPayload<>(payloadVersion, payload,tracer.getCurrentSpan());
     final KafkaMessage<T> message = new KafkaMessage<>(UUID.randomUUID(), key,
-        ZonedDateTime.now(ZoneOffset.UTC), type, kafkaPayload, tracer.getCurrentSpan());
+        ZonedDateTime.now(ZoneOffset.UTC), type, kafkaPayload);
     kafkaTemplate.send(topic, message.getKey(), message)
         .addCallback(successCallback, failureCallback);
   }
