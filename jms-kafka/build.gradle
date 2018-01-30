@@ -1,4 +1,6 @@
 dependencies {
   compile('org.springframework.kafka:spring-kafka')
   compile('org.springframework.boot:spring-boot-starter-activemq')
+  compile('org.springframework.cloud:spring-cloud-starter-sleuth')
+  compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 }
