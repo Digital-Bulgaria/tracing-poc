@@ -4,18 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import net.logstash.logback.encoder.org.apache.commons.lang.builder.EqualsBuilder;
-import net.logstash.logback.encoder.org.apache.commons.lang.builder.HashCodeBuilder;
-import org.springframework.cloud.sleuth.Span;
-
+/**
+ * NOTE: THIS IS TAKEN FROM REWE REFERENCE IMPLEMENTATION PLEASE SYNC YOUR CHANGES!
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class KafkaPayload<T> {
 
   private final Integer version;
-  private Span span;
 
   @NotNull
   @Valid
@@ -23,10 +22,10 @@ public class KafkaPayload<T> {
   private final T message;
 
   public KafkaPayload(@JsonProperty("version") final Integer version,
-      @JsonProperty("message") final T message, @JsonProperty("span") Span span ) {
+      @JsonProperty("message") final T message) {
     this.version = version;
     this.message = message;
-    this.span = span;
+
   }
 
   public Integer getVersion() {
@@ -37,34 +36,23 @@ public class KafkaPayload<T> {
     return message;
   }
 
-  public Span getSpan() {
-    return span;
-  }
-
   @Override
-  public boolean equals(Object obj) {
-    if (obj == null) {
-      return false;
-    }
-    if (obj == this) {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (obj.getClass() != getClass()) {
+    if (!(o instanceof KafkaPayload)) {
       return false;
     }
-    KafkaPayload rhs = (KafkaPayload) obj;
-    return new EqualsBuilder()
-        .append(this.version, rhs.version)
-        .append(this.message, rhs.message)
-        .isEquals();
+    KafkaPayload<?> that = (KafkaPayload<?>) o;
+    return Objects.equals(getVersion(), that.getVersion()) &&
+        Objects.equals(getMessage(), that.getMessage());
   }
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder()
-        .append(version)
-        .append(message)
-        .toHashCode();
+
+    return Objects.hash(getVersion(), getMessage());
   }
 
   @Override

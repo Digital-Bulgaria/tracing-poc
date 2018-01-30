@@ -10,9 +10,11 @@ import java.util.Objects;
 import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import net.logstash.logback.encoder.org.apache.commons.lang.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
+/**
+ * NOTE: THIS IS TAKEN FROM REWE REFERENCE IMPLEMENTATION PLEASE SYNC YOUR CHANGES!
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class KafkaMessage<T> {
@@ -40,7 +42,6 @@ public class KafkaMessage<T> {
     this.time = time;
     this.type = type;
     this.payload = payload;
-
   }
 
   public UUID getId() {
@@ -68,25 +69,21 @@ public class KafkaMessage<T> {
     if (this == o) {
       return true;
     }
-
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof KafkaMessage)) {
       return false;
     }
-
     KafkaMessage<?> that = (KafkaMessage<?>) o;
-
-    return new EqualsBuilder()
-        .append(id, that.id)
-        .append(key, that.key)
-        .append(time, that.time)
-        .append(type, that.type)
-        .append(payload, that.payload)
-        .isEquals();
+    return Objects.equals(getId(), that.getId()) &&
+        Objects.equals(getKey(), that.getKey()) &&
+        Objects.equals(getType(), that.getType()) &&
+        Objects.equals(getPayload(), that.getPayload()) &&
+        Objects.equals(getTime(), that.getTime());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, key, time, type, payload);
+
+    return Objects.hash(getId(), getKey(), getType(), getPayload(), getTime());
   }
 
   @Override

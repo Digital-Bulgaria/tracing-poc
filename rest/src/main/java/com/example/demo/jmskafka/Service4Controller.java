@@ -4,10 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.Tracer;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -59,21 +58,8 @@ public class Service4Controller {
   }
 
   @PostMapping("/greeting")
-  public ResponseEntity<GreetingPayload> receiveGreeting(@RequestBody GreetingPayload greeting) {
+  public void receiveGreeting() {
 
-    LOGGER.info("Received greeting [{}]", greeting);
 
-    if (greeting == null) {
-
-      return ResponseEntity.badRequest().build();
-    }
-
-    this.tracer.addTag("greetingTo", greeting.getName());
-    this.tracer.addTag("greetingDate", greeting.getDate().toString());
-    this.tracer.addTag("greetingMessage", greeting.getMessage());
-
-    this.tracer.getCurrentSpan().logEvent("greetingReceived");
-
-    return ResponseEntity.ok(greeting);
   }
 }

@@ -24,6 +24,8 @@ public class KafkaConsumerConfig {
   public static final String TRACING_POC_GREETINGS = "tracing_poc_greetings";
   public static final String POC_KAFKA_FACTORY = "pocKafkaFactory";
 
+  //As required by REWE architects - this will trigger infinite loop
+  //in some cases.
   private static final int NUMBER_OF_TRIES = Integer.MAX_VALUE;
 
 
