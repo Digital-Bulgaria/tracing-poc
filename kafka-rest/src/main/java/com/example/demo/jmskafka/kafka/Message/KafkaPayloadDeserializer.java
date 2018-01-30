@@ -13,9 +13,6 @@ import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 
-/**
- * NOTE: THIS IS TAKEN FROM REWE REFERENCE IMPLEMENTATION PLEASE SYNC YOUR CHANGES!
- */
 public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> implements
     ContextualDeserializer {
 
