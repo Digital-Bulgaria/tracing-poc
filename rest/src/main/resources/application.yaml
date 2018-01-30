@@ -10,6 +10,7 @@ spring:
     sampler:
       percentage: 1.0
 
-logging.level.org.springframework.cloud.sleuth: DEBUG
-logging.level.org.springframework.web.servlet.DispatcherServlet: DEBUG
+logging:
+  level.com.example.demo.jmskafka: DEBUG
+  config: classpath:logging/logback-spring.xml
 
