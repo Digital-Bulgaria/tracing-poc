@@ -1,4 +1,9 @@
 dependencies {
   compile('org.springframework.kafka:spring-kafka')
   compile('org.springframework.boot:spring-boot-starter-activemq')
+  compile('org.springframework:spring-jms')
+  compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+  compile('org.springframework.kafka:spring-kafka')
+
+  compileOnly('org.springframework.boot:spring-boot-configuration-processor')
 }

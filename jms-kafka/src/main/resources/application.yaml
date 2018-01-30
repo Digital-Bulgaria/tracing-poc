@@ -5,4 +5,23 @@ spring:
   application:
     name: s1
 
+  jms:
+    listener:
+      concurrency: 1
+      max-concurrency: 5
+      acknowledge-mode: auto
+
+  activemq:
+    broker-url: ${ACTIVEMQ_BROKER_URL:tcp://127.0.0.1:61616}
+    user: admin
+    password: admin
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+activemq:
+  destination: tracing_poc_greetings
+
+kafka.topics.greetings: tracing_poc_greetings
+
 logging.level.org.springframework.cloud.sleuth: DEBUG
