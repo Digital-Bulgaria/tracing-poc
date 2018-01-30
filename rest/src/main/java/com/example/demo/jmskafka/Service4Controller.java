@@ -59,7 +59,6 @@ public class Service4Controller {
 
   @PostMapping("/greeting")
   public void receiveGreeting() {
-
-
+    LOGGER.info("Greeting Senko!");
   }
 }

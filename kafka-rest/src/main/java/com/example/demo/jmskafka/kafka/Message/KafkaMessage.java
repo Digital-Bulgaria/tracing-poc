@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.cloud.sleuth.Span;
 
 /**
  * NOTE: THIS IS TAKEN FROM REWE REFERENCE IMPLEMENTATION PLEASE SYNC YOUR CHANGES!
@@ -34,14 +35,18 @@ public class KafkaMessage<T> {
   @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssX")//boh, article-v3 uses this format.
   private ZonedDateTime time;
 
+  private Span span;
+
   public KafkaMessage(@JsonProperty("id") final UUID id, @JsonProperty("key") final String key,
       @JsonProperty("time") final ZonedDateTime time, @JsonProperty("type") final String type,
-      @JsonProperty("payload") final KafkaPayload<T> payload) {
+      @JsonProperty("payload") final KafkaPayload<T> payload,
+      Span span) {
     this.id = id;
     this.key = key;
     this.time = time;
     this.type = type;
     this.payload = payload;
+    this.span = span;
   }
 
   public UUID getId() {
@@ -96,5 +101,9 @@ public class KafkaMessage<T> {
         ", type='" + type + '\'' +
         ", payload=" + payload +
         '}';
+  }
+
+  public Span getSpan() {
+    return span;
   }
 }
