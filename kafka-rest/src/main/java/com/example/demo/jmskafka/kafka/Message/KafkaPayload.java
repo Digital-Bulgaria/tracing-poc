@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import net.logstash.logback.encoder.org.apache.commons.lang.builder.EqualsBuilder;
-import net.logstash.logback.encoder.org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.cloud.sleuth.Span;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
