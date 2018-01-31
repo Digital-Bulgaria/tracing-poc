@@ -1,7 +1,6 @@
 package com.example.demo.jmskafka;
 
 import com.example.demo.jmskafka.domain.Greeting;
-import com.example.demo.jmskafka.kafka.KafkaMessageJSONParser;
 import java.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +41,8 @@ public class RunnerKafkaSend implements CommandLineRunner {
       LOGGER.error(e.getMessage());
     }
 
-    this.birthdayService.sendGreeting(greeting);
+    this.birthdayService.sendGreeting(greeting, span);
 
-    tracer.close(tracer.getCurrentSpan());
+    tracer.close(span);
   }
 }

@@ -64,7 +64,7 @@ public class KafkaListener implements ConsumerSeekAware {
         .map(KafkaPayload::getSpan)
         .orElse(null);
 
-    tracer.continueSpan(span);
+    Span kafka_span = tracer.createSpan("kafka_span", span);
 
     if (greeting != null) {
       LOGGER.info("We've get the greeting [{}]",greeting);
@@ -84,7 +84,7 @@ public class KafkaListener implements ConsumerSeekAware {
         consumerRecord.partition(),
         consumerRecord.offset());
 
-    tracer.close(tracer.getCurrentSpan());
+    tracer.close(kafka_span);
   }
 
 

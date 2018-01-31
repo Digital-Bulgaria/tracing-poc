@@ -52,11 +52,9 @@ public class KafkaSender {
    * @param failureCallback Called in case a message could not be sent
    */
   public <T> void send(final String topic, final String type, final String key,
-      final Integer payloadVersion, final T payload,
+      final Integer payloadVersion, final T payload, Span span ,
       final SuccessCallback<SendResult<String, KafkaMessage>> successCallback,
       final FailureCallback failureCallback) {
-
-    Span span = tracer.getCurrentSpan();
 
     LOGGER.info("Publishing message {}, {}, {}, {}.", topic, type, payload, span );
 
@@ -66,6 +64,5 @@ public class KafkaSender {
     kafkaTemplate.send(topic, message.getKey(), message)
         .addCallback(successCallback, failureCallback);
 
-    tracer.close(span);
   }
 }

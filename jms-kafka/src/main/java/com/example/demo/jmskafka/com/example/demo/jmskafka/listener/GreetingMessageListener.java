@@ -49,7 +49,7 @@ public class GreetingMessageListener implements MessageListener {
         // do nothing
       }
 
-      birthdayService.sendGreeting(greeting);
+      birthdayService.sendGreeting(greeting,span);
       tracer.close(span);
     }
     catch (JMSException e) {

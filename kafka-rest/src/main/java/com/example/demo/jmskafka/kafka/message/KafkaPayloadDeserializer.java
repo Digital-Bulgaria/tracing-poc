@@ -68,7 +68,7 @@ public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> 
       LOGGER.info("Span recieved: {}", span);
     } else {
       LOGGER.info("Span not recieved");
-      span = tracer.createSpan("s2");
+      span = tracer.createSpan("s2 not recieved");
       LOGGER.info("Traced our span : {}",span);
     }
 

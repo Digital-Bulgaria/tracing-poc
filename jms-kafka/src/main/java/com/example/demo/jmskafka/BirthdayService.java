@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.sleuth.Span;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.FailureCallback;
@@ -34,9 +35,9 @@ public class BirthdayService {
     this.kafkaSender = kafkaSender;
   }
 
-  public void sendGreeting(Greeting greeting) {
-    kafkaSender.send(TOPIC, TYPE, UUID.randomUUID().toString(), 1, greeting, successCallback,
+  public void sendGreeting(Greeting greeting, Span span) {
+    kafkaSender.send(TOPIC, TYPE, UUID.randomUUID().toString(), 1, greeting, span,
+        successCallback,
         failureCallback);
-
   }
 }
