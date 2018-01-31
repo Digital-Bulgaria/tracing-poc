@@ -7,6 +7,7 @@ import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -58,8 +59,8 @@ public class Service4Controller {
   }
 
   @PostMapping("/greeting")
-  public void receiveGreeting() {
-
+  public void receiveGreeting(@RequestBody GreetingPayload greeting) {
+    LOGGER.info("Recived greeting [{}]",greeting);
 
   }
 }

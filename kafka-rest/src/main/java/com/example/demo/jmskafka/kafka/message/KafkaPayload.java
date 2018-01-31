@@ -1,4 +1,4 @@
-package com.example.demo.jmskafka.kafka.Message;
+package com.example.demo.jmskafka.kafka.message;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;

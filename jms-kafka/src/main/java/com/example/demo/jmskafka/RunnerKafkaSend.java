@@ -25,6 +25,7 @@ public class RunnerKafkaSend implements CommandLineRunner {
     Span span = tracer.createSpan("birhtday");
 
     Greeting greeting = new Greeting();
+    greeting.setTo("senko");
     greeting.setDate(LocalDate.now());
     greeting.setMessage("Happy birthday!");
 

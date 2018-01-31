@@ -4,9 +4,9 @@ import static com.example.demo.jmskafka.kafka.config.KafkaConsumerConfig.POC_KAF
 import static com.example.demo.jmskafka.kafka.config.KafkaConsumerConfig.TRACING_POC_GREETINGS;
 
 import com.example.demo.jmskafka.domain.Greeting;
-import com.example.demo.jmskafka.kafka.Message.KafkaMessage;
-import com.example.demo.jmskafka.kafka.Message.KafkaMessageJSONParser;
-import com.example.demo.jmskafka.kafka.Message.KafkaPayload;
+import com.example.demo.jmskafka.kafka.message.KafkaMessage;
+import com.example.demo.jmskafka.kafka.message.KafkaMessageJSONParser;
+import com.example.demo.jmskafka.kafka.message.KafkaPayload;
 import com.example.demo.jmskafka.rest.RestSender;
 import java.util.Map;
 import java.util.Optional;

@@ -46,5 +46,7 @@ subprojects {
     compile('org.springframework.cloud:spring-cloud-starter-sleuth')
 
     compile("org.springframework.cloud:spring-cloud-sleuth-zipkin")
+    compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310')
+    compile('org.apache.commons:commons-lang3:3.0')
   }
 }

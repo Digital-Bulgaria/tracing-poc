@@ -1,4 +1,4 @@
-package com.example.demo.jmskafka.kafka.Message;
+package com.example.demo.jmskafka.kafka.message;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.BeanProperty;
