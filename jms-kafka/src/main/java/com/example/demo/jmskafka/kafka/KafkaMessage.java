@@ -13,9 +13,6 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- * NOTE: THIS IS TAKEN FROM REWE REFERENCE IMPLEMENTATION PLEASE SYNC YOUR CHANGES!
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class KafkaMessage<T> {
@@ -32,7 +29,7 @@ public class KafkaMessage<T> {
   @JsonDeserialize(using = KafkaPayloadDeserializer.class)
   private final KafkaPayload<T> payload;
   @NotNull
-  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssX")//boh, article-v3 uses this format.
+  @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssX")
   private ZonedDateTime time;
 
   public KafkaMessage(@JsonProperty("id") final UUID id, @JsonProperty("key") final String key,

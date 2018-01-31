@@ -54,7 +54,7 @@ public class KafkaSender {
 
     LOGGER.info("Publishing message {}, {}, {}, {}.", topic, type, payload, span );
 
-    final KafkaPayload<T> kafkaPayload = new KafkaPayload<>(payloadVersion, payload,span);
+    final KafkaPayload<T> kafkaPayload = new KafkaPayload<>(payloadVersion, payload, span);
     final KafkaMessage<T> message = new KafkaMessage<>(UUID.randomUUID(), key,
         ZonedDateTime.now(ZoneOffset.UTC), type, kafkaPayload);
     kafkaTemplate.send(topic, message.getKey(), message)
