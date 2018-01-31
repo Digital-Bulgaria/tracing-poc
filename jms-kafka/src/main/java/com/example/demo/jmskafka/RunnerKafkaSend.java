@@ -28,6 +28,9 @@ public class RunnerKafkaSend implements CommandLineRunner {
   public void run(String... strings) throws Exception {
 
     Span span = tracer.createSpan("birhtday");
+    span.logEvent("ss");
+
+    LOGGER.info("parent: {}.", span);
 
     Greeting greeting = new Greeting();
     greeting.setTo("senko");
@@ -35,13 +38,15 @@ public class RunnerKafkaSend implements CommandLineRunner {
     greeting.setMessage("Happy birthday!");
 
     try {
-      Thread.sleep(2000);
+      Thread.sleep(5000);
     } catch (InterruptedException e) {
       LOGGER.error(e.getMessage());
     }
 
     this.birthdayService.sendGreeting(greeting);
 
-    tracer.close(span);
+    if(span.isRunning()){
+      tracer.close(span);
+    }
   }
 }

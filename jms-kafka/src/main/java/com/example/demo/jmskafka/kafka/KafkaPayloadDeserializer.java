@@ -12,33 +12,40 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.ContextualDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.sleuth.Span;
+import org.springframework.cloud.sleuth.Tracer;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+@Component
 public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> implements
     ContextualDeserializer {
+  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaPayloadDeserializer.class);
 
-  public static final String FIELD_REVISION = "revision";
-  public static final String FIELD_VERSION = "version";
-  public static final String FIELD_DATA = "data";
-  public static final String FIELD_SPAN = "span";
+  private static final String FIELD_REVISION = "revision";
+  private static final String FIELD_VERSION = "version";
+  private static final String FIELD_DATA = "data";
+  private static final String FIELD_SPAN = "span";
 
   private JavaType valueType;
 
   private ObjectMapper objectMapper;
+  private Tracer tracer;
 
-  public KafkaPayloadDeserializer() {
-    objectMapper = new ObjectMapper();
-    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    objectMapper.registerModule(new JavaTimeModule());
+  @Autowired
+  public KafkaPayloadDeserializer(ObjectMapper objectMapper,Tracer tracer) {
+    this.objectMapper = objectMapper;
+    this.tracer = tracer;
   }
 
   @Override
-  public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property)
-      throws JsonMappingException {
+  public JsonDeserializer<?> createContextual(DeserializationContext ctxt, BeanProperty property) {
     JavaType payloadType = property.getType();
     JavaType valueType = payloadType.containedType(0);
-    KafkaPayloadDeserializer deserializer = new KafkaPayloadDeserializer();
+    KafkaPayloadDeserializer deserializer = new KafkaPayloadDeserializer(objectMapper, tracer);
     deserializer.valueType = valueType;
 
     return deserializer;
@@ -53,18 +60,22 @@ public class KafkaPayloadDeserializer extends JsonDeserializer<KafkaPayload<?>> 
 
     String spanString = "";
     if (spanNode != null) {
-      spanString = spanNode.asText();
+      spanString = spanNode.toString();
     }
     Object message;
     Integer version;
     Span span;
 
     if(StringUtils.hasText(spanString)) {
-      span = objectMapper.readValue(spanString, Span.class);
+      Span recievedSpan = objectMapper.readValue(spanString, Span.class);
+      LOGGER.info("Span recieved: []",recievedSpan);
+      span = tracer.createSpan("s2", recievedSpan);
+      LOGGER.info("Traced span : []", span);
     } else {
-      span = Span.builder().build();
+      LOGGER.info("Span not recieved");
+      span = tracer.createSpan("s2");
+      LOGGER.info("Traced our span : []",span);
     }
-
 
     if (dataNode != null) {
       message = objectMapper
