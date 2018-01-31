@@ -15,6 +15,8 @@ import org.apache.kafka.common.TopicPartition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.Span;
+import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.kafka.listener.ConsumerSeekAware;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
@@ -26,11 +28,13 @@ public class KafkaListener implements ConsumerSeekAware {
 
   private final KafkaMessageJSONParser jsonParser;
   private final RestSender restSender;
+  private final Tracer tracer;
 
   @Autowired
-  public KafkaListener(KafkaMessageJSONParser jsonParser,RestSender restSender) {
+  public KafkaListener(KafkaMessageJSONParser jsonParser,RestSender restSender,Tracer tracer) {
     this.jsonParser = jsonParser;
     this.restSender = restSender;
+    this.tracer = tracer;
   }
 
   @org.springframework.kafka.annotation.KafkaListener(
@@ -56,6 +60,12 @@ public class KafkaListener implements ConsumerSeekAware {
         .map(KafkaPayload::getMessage)
         .orElse(null);
 
+    Span span = messageOpt.map(KafkaMessage::getPayload)
+        .map(KafkaPayload::getSpan)
+        .orElse(null);
+
+    tracer.continueSpan(span);
+
     if (greeting != null) {
       LOGGER.info("We've get the greeting [{}]",greeting);
 
@@ -73,6 +83,8 @@ public class KafkaListener implements ConsumerSeekAware {
         consumerRecord.topic(),
         consumerRecord.partition(),
         consumerRecord.offset());
+
+    tracer.close(tracer.getCurrentSpan());
   }
 
 
