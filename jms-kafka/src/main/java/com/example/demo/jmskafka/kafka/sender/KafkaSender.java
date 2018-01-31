@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.Span;
 import org.springframework.cloud.sleuth.Tracer;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
@@ -55,12 +56,16 @@ public class KafkaSender {
       final SuccessCallback<SendResult<String, KafkaMessage>> successCallback,
       final FailureCallback failureCallback) {
 
-    LOGGER.info("Publishing message {}, {}, {}, {}.", topic, type, payload, tracer.getCurrentSpan());
+    Span span = tracer.getCurrentSpan();
 
-    final KafkaPayload<T> kafkaPayload = new KafkaPayload<>(payloadVersion, payload,tracer.getCurrentSpan());
+    LOGGER.info("Publishing message {}, {}, {}, {}.", topic, type, payload, span );
+
+    final KafkaPayload<T> kafkaPayload = new KafkaPayload<>(payloadVersion, payload,span);
     final KafkaMessage<T> message = new KafkaMessage<>(UUID.randomUUID(), key,
         ZonedDateTime.now(ZoneOffset.UTC), type, kafkaPayload);
     kafkaTemplate.send(topic, message.getKey(), message)
         .addCallback(successCallback, failureCallback);
+
+    tracer.close(span);
   }
 }

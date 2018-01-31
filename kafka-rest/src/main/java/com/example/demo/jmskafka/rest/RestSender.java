@@ -26,6 +26,12 @@ public class RestSender {
     Objects.requireNonNull(greeting);
     LOGGER.info("We are going to post greeting [{}]",greeting);
 
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      LOGGER.error(e.getMessage());
+    }
+
     Greeting postedGreeting = restTemplate
         .postForObject(REST_RESOURCE, new HttpEntity<>(greeting), Greeting.class);
 

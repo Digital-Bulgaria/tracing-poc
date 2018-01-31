@@ -58,6 +58,12 @@ public class KafkaListener implements ConsumerSeekAware {
 
     if (greeting != null) {
       LOGGER.info("We've get the greeting [{}]",greeting);
+
+      try {
+        Thread.sleep(2000);
+      } catch (InterruptedException e) {
+        LOGGER.error(e.getMessage());
+      }
       restSender.send(greeting);
     } else {
       //can't parse

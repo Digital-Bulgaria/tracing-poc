@@ -20,12 +20,10 @@ public class BirthdayService {
   private final static String TYPE = "type";
   private KafkaSender kafkaSender;
 
-  protected final FailureCallback failureCallback =
-      (ex) -> {
-        LOGGER.error("Failed to send message to Kafka topic", ex);
-      };
+  private final FailureCallback failureCallback =
+      (ex) -> LOGGER.error("Failed to send message to Kafka topic", ex);
 
-  protected final SuccessCallback<SendResult<String, KafkaMessage>> successCallback =
+  private final SuccessCallback<SendResult<String, KafkaMessage>> successCallback =
       (SendResult<String, KafkaMessage> result) -> {
         ProducerRecord<String, KafkaMessage> record = result.getProducerRecord();
         LOGGER.debug("Successfully sent on topic '{}' message id: {}", record.topic(),

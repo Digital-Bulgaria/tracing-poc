@@ -60,6 +60,12 @@ public class Service4Controller {
 
   @PostMapping("/greeting")
   public void receiveGreeting(@RequestBody GreetingPayload greeting) {
+    try {
+      Thread.sleep(6000);
+    } catch (InterruptedException e) {
+      LOGGER.error(e.getMessage());
+    }
+
     LOGGER.info("Recived greeting [{}]",greeting);
 
   }
