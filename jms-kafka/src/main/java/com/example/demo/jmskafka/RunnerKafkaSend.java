@@ -26,7 +26,7 @@ public class RunnerKafkaSend implements CommandLineRunner {
   @Override
   public void run(String... strings) throws Exception {
 
-    Span span = tracer.createSpan("birhtday");
+    Span span = tracer.createSpan("runner-greeting-received");
 
     LOGGER.info("parent: {}.", span);
 

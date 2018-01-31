@@ -26,14 +26,10 @@ public class KafkaSender {
 
   private KafkaTemplate<String, KafkaMessage> kafkaTemplate;
 
-  private Tracer tracer;
-
   @Autowired
-  public KafkaSender(KafkaTemplate<String, KafkaMessage> kafkaTemplate,
-      Tracer tracer) {
+  public KafkaSender(KafkaTemplate<String, KafkaMessage> kafkaTemplate) {
 
     this.kafkaTemplate = kafkaTemplate;
-    this.tracer = tracer;
   }
 
   /**

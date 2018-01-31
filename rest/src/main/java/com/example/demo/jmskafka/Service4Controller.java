@@ -15,12 +15,9 @@ public class Service4Controller {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Service4Controller.class);
 
-  private final RestTemplate restTemplate;
   private final Tracer tracer;
 
-  public Service4Controller(RestTemplate restTemplate,
-      Tracer tracer) {
-    this.restTemplate = restTemplate;
+  public Service4Controller(Tracer tracer) {
     this.tracer = tracer;
   }
 

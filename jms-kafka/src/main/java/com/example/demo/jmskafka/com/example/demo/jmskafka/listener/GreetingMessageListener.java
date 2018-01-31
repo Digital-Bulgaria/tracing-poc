@@ -21,8 +21,6 @@ public class GreetingMessageListener implements MessageListener {
   private final BirthdayService birthdayService;
   private final Tracer tracer;
 
-
-
   public GreetingMessageListener(
       final ObjectMapper objectMapper,
       final BirthdayService birthdayService,
@@ -49,7 +47,7 @@ public class GreetingMessageListener implements MessageListener {
         // do nothing
       }
 
-      birthdayService.sendGreeting(greeting,span);
+      birthdayService.sendGreeting(greeting, span);
       tracer.close(span);
     }
     catch (JMSException e) {
