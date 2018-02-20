@@ -26,10 +26,5 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
 
-activemq:
-  destination: tracing_poc_greetings
-
 logging.level.org.springframework.cloud.sleuth: DEBUG
-
-logging.level.org.springframework.web.servlet.DispatcherServlet: DEBUG
 

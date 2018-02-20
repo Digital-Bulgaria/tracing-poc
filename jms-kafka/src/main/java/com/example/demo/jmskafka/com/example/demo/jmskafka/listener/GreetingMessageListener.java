@@ -42,7 +42,9 @@ public class GreetingMessageListener implements MessageListener {
       LOGGER.debug("Greeting JSON object: {}", greeting);
 
       try {
-        Thread.sleep(2000);
+        int waitFor = 2000;
+        LOGGER.debug("Deliberately waiting for {} millis...", waitFor);
+        Thread.sleep(waitFor);
       } catch (InterruptedException e) {
         // do nothing
       }
@@ -50,11 +52,8 @@ public class GreetingMessageListener implements MessageListener {
       birthdayService.sendGreeting(greeting, span);
       tracer.close(span);
     }
-    catch (JMSException e) {
-      LOGGER.error("Error reading JMS message", e);
-    }
-    catch (IOException ioEx) {
-      LOGGER.error("Error parsing JSON message", ioEx);
+    catch (JMSException|IOException e) {
+      LOGGER.error("Error reading/parsing JMS message", e);
     }
   }
 

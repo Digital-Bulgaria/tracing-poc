@@ -67,7 +67,7 @@ public class KafkaListener implements ConsumerSeekAware {
     Span kafka_span = tracer.createSpan("kafka-greeting-received", span);
 
     if (greeting != null) {
-      LOGGER.info("We've get the greeting [{}]",greeting);
+      LOGGER.info("We've got the greeting [{}]",greeting);
 
       restSender.send(greeting);
     } else {

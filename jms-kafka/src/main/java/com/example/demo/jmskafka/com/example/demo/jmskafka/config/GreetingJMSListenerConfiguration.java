@@ -13,20 +13,17 @@ import org.springframework.jms.config.SimpleJmsListenerEndpoint;
 import org.springframework.kafka.core.KafkaTemplate;
 
 @Configuration
-@EnableConfigurationProperties({JMSConfigurationProperties.class})
 public class GreetingJMSListenerConfiguration implements JmsListenerConfigurer {
 
-  private final JMSConfigurationProperties jmsConfigurationProperties;
   private final ObjectMapper objectMapper;
   private final BirthdayService birthdayService;
   private final Tracer tracer;
 
-  public GreetingJMSListenerConfiguration(final JMSConfigurationProperties jmsConfigProperties,
+  public GreetingJMSListenerConfiguration(
       final ObjectMapper objectMapper,
       final BirthdayService birthdayService,
       final Tracer tracer) {
 
-    this.jmsConfigurationProperties = jmsConfigProperties;
     this.objectMapper = objectMapper;
     this.birthdayService = birthdayService;
     this.tracer = tracer;
@@ -36,8 +33,10 @@ public class GreetingJMSListenerConfiguration implements JmsListenerConfigurer {
   public void configureJmsListeners(JmsListenerEndpointRegistrar registrar) {
 
     SimpleJmsListenerEndpoint endpoint = new SimpleJmsListenerEndpoint();
+    //
     endpoint.setId("greetings-endpoint-poc");
-    endpoint.setDestination(jmsConfigurationProperties.getDestination());
+    endpoint.setDestination("tracing_poc_greetings");
+
     endpoint.setMessageListener(new GreetingMessageListener(objectMapper, birthdayService, tracer));
 
     registrar.registerEndpoint(endpoint);
